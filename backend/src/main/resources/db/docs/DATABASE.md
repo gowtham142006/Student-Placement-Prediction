@@ -1,11 +1,25 @@
-# Database Design
+# Students Table
 
-Database: PostgreSQL (Supabase)
+Purpose:
+Stores student information used for placement prediction.
 
-Tables
+Primary Key:
+id
 
-- students
-- predictions
-- communication_tests
-- mock_interviews
-- chat_history
+Columns:
+
+age
+gender
+cgpa
+branch
+college_tier
+internships_count
+projects_count
+certifications_count
+coding_skill_score
+communication_skill_score
+aptitude_score
+logical_reasoning_score
+mock_interview_score
+backlogs
+placement_status
