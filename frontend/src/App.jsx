@@ -2,10 +2,10 @@ import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
 
-import Home from "./pages/home";
-import About from "./pages/about";
+import Home from "./pages/Home";
+import About from "./pages/About";
 import Prediction from "./pages/Prediction";
-import NotFound from "./pages/notfound";
+import NotFound from "./pages/Notfound";
 
 function App() {
   return (
