@@ -1,5 +1,8 @@
 package com.studentplacement.backend.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "students")
@@ -23,36 +29,38 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "student_name", nullable = false)
-    private String studentName;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private Integer age;
 
     @Column(nullable = false)
-    private String gender;
-
-    @Column(nullable = false)
-    private Double cgpa;
+    private BigDecimal cgpa;
 
     @Column(name = "tenth_percentage", nullable = false)
-    private Double tenthPercentage;
+    private BigDecimal tenthPercentage;
 
     @Column(name = "twelfth_percentage", nullable = false)
-    private Double twelfthPercentage;
+    private BigDecimal twelfthPercentage;
 
-    @Column(name = "programming_skill", nullable = false)
-    private String programmingSkill;
-
-    @Column(name = "communication_skill", nullable = false)
-    private String communicationSkill;
+    @Column(columnDefinition = "TEXT")
+    private String skills;
 
     @Column(nullable = false)
-    private Boolean internship;
+    private Integer internships;
 
-    @Column(name = "projects_completed", nullable = false)
-    private Integer projectsCompleted;
+    @Column(name = "communication_score", nullable = false)
+    private BigDecimal communicationScore;
 
-    @Column(nullable = false)
-    private Integer certifications;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 }
