@@ -12,7 +12,6 @@ function PredictionForm() {
         internships: "",
         communication: "",
     });
-
     const handleChange = (e) => {
         setStudent({
             ...student,
