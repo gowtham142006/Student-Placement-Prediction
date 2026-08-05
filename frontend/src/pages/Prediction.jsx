@@ -1,44 +1,31 @@
-import { Link } from "react-router-dom";
+import PredictionForm from "../components/PredictionForm";
 
 function Prediction() {
   return (
-    <section className="py-20 md:py-28 bg-slate-50 min-h-[70vh] flex items-center">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Icon */}
-        <div className="flex items-center justify-center w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 text-4xl shadow-lg shadow-primary-200 mb-8">
-          🔮
+    <>
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 py-16 md:py-20">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-72 h-72 rounded-full bg-accent-500/20 blur-3xl" />
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-72 h-72 rounded-full bg-primary-400/20 blur-3xl" />
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-          Prediction Engine
-        </h1>
-
-        <p className="mt-4 text-lg text-slate-500 max-w-md mx-auto leading-relaxed">
-          Our AI-powered prediction form is coming soon. You&apos;ll be able to
-          enter your academic details and receive an instant placement
-          prediction.
-        </p>
-
-        {/* Coming Soon Card */}
-        <div className="mt-10 bg-white rounded-2xl p-8 border border-slate-100 shadow-md">
-          <div className="flex items-center justify-center gap-2 text-primary-600 font-semibold text-sm mb-3">
-            <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
-            Under Development
-          </div>
-          <p className="text-slate-500 text-sm">
-            The prediction form with ML model integration will be available in
-            Phase 2. Stay tuned for updates!
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+            Placement Predictor
+          </h1>
+          <p className="mt-4 text-lg text-indigo-100 max-w-2xl mx-auto leading-relaxed">
+            Enter your academic performance, project details, and skill scores
+            below to get an AI-powered prediction of your placement chances.
           </p>
         </div>
+      </section>
 
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-xl bg-primary-600 text-white font-semibold text-sm shadow-md shadow-primary-200 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
-        >
-          ← Back to Home
-        </Link>
-      </div>
-    </section>
+      <section className="py-12 md:py-16 bg-slate-50 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PredictionForm />
+        </div>
+      </section>
+    </>
   );
 }
 
