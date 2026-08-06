@@ -11,14 +11,14 @@ function PredictionForm() {
     cgpa: "",
     branch: "",
     collegeTier: "",
-    internships: "",
-    projects: "",
-    certifications: "",
-    codingSkill: 50,
-    communicationSkill: 50,
+    internshipsCount: "",
+    projectsCount: "",
+    certificationsCount: "",
+    codingSkillScore: 50,
+    communicationSkillScore: 50,
     aptitudeScore: 50,
-    logicalReasoning: 50,
-    mockInterview: 50,
+    logicalReasoningScore: 50,
+    mockInterviewScore: 50,
     backlogs: "",
   });
 
@@ -67,25 +67,25 @@ function PredictionForm() {
     }
 
     // Sliders bounds
-    if (formData.codingSkill < 0 || formData.codingSkill > 100) {
-      newErrors.codingSkill = "Must be between 0 and 100";
+    if (formData.codingSkillScore < 0 || formData.codingSkillScore > 100) {
+      newErrors.codingSkillScore = "Must be between 0 and 100";
     }
     
-    if (formData.communicationSkill < 0 || formData.communicationSkill > 100) {
-      newErrors.communicationSkill = "Must be between 0 and 100";
+    if (formData.communicationSkillScore < 0 || formData.communicationSkillScore > 100) {
+      newErrors.communicationSkillScore = "Must be between 0 and 100";
     }
 
     // Number fields cannot be negative
-    if (formData.internships !== "" && formData.internships < 0) {
-      newErrors.internships = "Cannot be negative";
+    if (formData.internshipsCount !== "" && formData.internshipsCount < 0) {
+      newErrors.internshipsCount = "Cannot be negative";
     }
 
-    if (formData.projects !== "" && formData.projects < 0) {
-      newErrors.projects = "Cannot be negative";
+    if (formData.projectsCount !== "" && formData.projectsCount < 0) {
+      newErrors.projectsCount = "Cannot be negative";
     }
 
-    if (formData.certifications !== "" && formData.certifications < 0) {
-      newErrors.certifications = "Cannot be negative";
+    if (formData.certificationsCount !== "" && formData.certificationsCount < 0) {
+      newErrors.certificationsCount = "Cannot be negative";
     }
 
     if (formData.backlogs !== "" && formData.backlogs < 0) {
@@ -179,9 +179,9 @@ function PredictionForm() {
                 onChange={handleChange}
                 error={errors.collegeTier}
                 options={[
-                  { value: "tier1", label: "Tier 1" },
-                  { value: "tier2", label: "Tier 2" },
-                  { value: "tier3", label: "Tier 3" },
+                  { value: "1", label: "Tier 1" },
+                  { value: "2", label: "Tier 2" },
+                  { value: "3", label: "Tier 3" },
                 ]}
               />
               <FormInput
@@ -204,34 +204,34 @@ function PredictionForm() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
               <FormInput
-                id="internships"
-                name="internships"
+                id="internshipsCount"
+                name="internshipsCount"
                 label="Internships Count"
                 type="number"
                 min="0"
-                value={formData.internships}
+                value={formData.internshipsCount}
                 onChange={handleChange}
-                error={errors.internships}
+                error={errors.internshipsCount}
               />
               <FormInput
-                id="projects"
-                name="projects"
+                id="projectsCount"
+                name="projectsCount"
                 label="Projects Count"
                 type="number"
                 min="0"
-                value={formData.projects}
+                value={formData.projectsCount}
                 onChange={handleChange}
-                error={errors.projects}
+                error={errors.projectsCount}
               />
               <FormInput
-                id="certifications"
-                name="certifications"
+                id="certificationsCount"
+                name="certificationsCount"
                 label="Certifications Count"
                 type="number"
                 min="0"
-                value={formData.certifications}
+                value={formData.certificationsCount}
                 onChange={handleChange}
-                error={errors.certifications}
+                error={errors.certificationsCount}
               />
             </div>
           </div>
@@ -243,20 +243,20 @@ function PredictionForm() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <FormSlider
-                id="codingSkill"
-                name="codingSkill"
+                id="codingSkillScore"
+                name="codingSkillScore"
                 label="Coding Skill Score"
-                value={formData.codingSkill}
+                value={formData.codingSkillScore}
                 onChange={handleChange}
-                error={errors.codingSkill}
+                error={errors.codingSkillScore}
               />
               <FormSlider
-                id="communicationSkill"
-                name="communicationSkill"
+                id="communicationSkillScore"
+                name="communicationSkillScore"
                 label="Communication Skill Score"
-                value={formData.communicationSkill}
+                value={formData.communicationSkillScore}
                 onChange={handleChange}
-                error={errors.communicationSkill}
+                error={errors.communicationSkillScore}
               />
               <FormSlider
                 id="aptitudeScore"
@@ -267,20 +267,20 @@ function PredictionForm() {
                 error={errors.aptitudeScore}
               />
               <FormSlider
-                id="logicalReasoning"
-                name="logicalReasoning"
+                id="logicalReasoningScore"
+                name="logicalReasoningScore"
                 label="Logical Reasoning Score"
-                value={formData.logicalReasoning}
+                value={formData.logicalReasoningScore}
                 onChange={handleChange}
-                error={errors.logicalReasoning}
+                error={errors.logicalReasoningScore}
               />
               <FormSlider
-                id="mockInterview"
-                name="mockInterview"
+                id="mockInterviewScore"
+                name="mockInterviewScore"
                 label="Mock Interview Score"
-                value={formData.mockInterview}
+                value={formData.mockInterviewScore}
                 onChange={handleChange}
-                error={errors.mockInterview}
+                error={errors.mockInterviewScore}
               />
             </div>
           </div>
