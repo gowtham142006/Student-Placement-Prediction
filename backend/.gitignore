@@ -32,5 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-### Environment Variables ###
+### Confidential ###
 .env
+**/application.properties
