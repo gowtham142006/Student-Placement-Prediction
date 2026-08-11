@@ -24,6 +24,7 @@ function PredictionForm() {
     });
 
     const [errors, setErrors] = useState({});
+    const [predictionResult, setPredictionResult] = useState(null);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -105,6 +106,7 @@ function PredictionForm() {
         try {
             const result = await predictPlacement(formData);
             console.log(result);
+            setPredictionResult(result);
         } catch (error) {
             console.error("Prediction failed:", error);
         }
@@ -301,6 +303,23 @@ function PredictionForm() {
                             Predict Placement
                         </button>
                     </div>
+                    {predictionResult && (
+                        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center">
+                            <h3 className="text-2xl font-bold text-slate-900">
+                                {predictionResult.prediction
+                                    ? "Likely to be Placed 🎉"
+                                    : "Unlikely to be Placed"}
+                            </h3>
+
+                            <p className="mt-3 text-lg text-slate-600">
+                                Confidence: {predictionResult.confidence}%
+                            </p>
+
+                            <p className="mt-2 text-slate-600">
+                                {predictionResult.message}
+                            </p>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
