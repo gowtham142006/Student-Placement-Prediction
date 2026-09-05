@@ -1,0 +1,75 @@
+{
+    "model_name": "Tuned Gradient Boosting Classifier",
+    "model_type": "GradientBoostingClassifier",
+    "target_column": "placement_status",
+    "target_mapping": {
+        "Placed": 1,
+        "Not Placed": 0
+    },
+    "raw_input_feature_names": [
+        "age",
+        "gender",
+        "cgpa",
+        "branch",
+        "college_tier",
+        "internships_count",
+        "projects_count",
+        "certifications_count",
+        "coding_skill_score",
+        "aptitude_score",
+        "communication_skill_score",
+        "logical_reasoning_score",
+        "mock_interview_score",
+        "backlogs"
+    ],
+    "categorical_features": [
+        "gender",
+        "branch",
+        "college_tier"
+    ],
+    "numerical_features": [
+        "age",
+        "cgpa",
+        "internships_count",
+        "projects_count",
+        "certifications_count",
+        "coding_skill_score",
+        "aptitude_score",
+        "communication_skill_score",
+        "logical_reasoning_score",
+        "mock_interview_score",
+        "backlogs"
+    ],
+    "preprocessing_method": "ColumnTransformer (OneHotEncoder for categorical, passthrough for numerical)",
+    "train_test_split": {
+        "test_size": 0.2,
+        "random_state": 42,
+        "stratified": true,
+        "train_samples": 80000,
+        "test_samples": 20000
+    },
+    "model_hyperparameters": {
+        "n_estimators": 150,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "subsample": 0.8,
+        "random_state": 42
+    },
+    "final_test_metrics": {
+        "accuracy": 0.5669,
+        "precision": 0.5726,
+        "recall": 0.8074,
+        "f1_score": 0.67,
+        "confusion_matrix": [
+            [
+                2544,
+                6564
+            ],
+            [
+                2098,
+                8794
+            ]
+        ]
+    },
+    "creation_date": "2026-08-19T19:42:38.111688"
+}
