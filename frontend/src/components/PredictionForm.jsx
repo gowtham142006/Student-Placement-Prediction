@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2, AlertCircle } from "lucide-react";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import FormSlider from "./FormSlider";
@@ -25,18 +25,23 @@ function PredictionForm() {
 
     const [errors, setErrors] = useState({});
     const [predictionResult, setPredictionResult] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [apiError, setApiError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
 
         setFormData((prev) => ({
             ...prev,
-            [name]: type === "range" || type === "number" ? Number(value) : value,
+            [name]: type === "range" || type === "number" ? (value === "" ? "" : Number(value)) : value,
         }));
 
         // Clear error when field is modified
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+        if (apiError) {
+            setApiError(null);
         }
     };
 
@@ -103,13 +108,43 @@ function PredictionForm() {
 
         if (!validate()) return;
 
+        setLoading(true);
+        setApiError(null);
+        setPredictionResult(null);
+
+        const payload = {
+            age: Number(formData.age),
+            gender: formData.gender,
+            cgpa: Number(formData.cgpa),
+            branch: formData.branch,
+            collegeTier: Number(formData.collegeTier),
+            internshipsCount: Number(formData.internshipsCount) || 0,
+            projectsCount: Number(formData.projectsCount) || 0,
+            certificationsCount: Number(formData.certificationsCount) || 0,
+            codingSkillScore: Number(formData.codingSkillScore),
+            communicationSkillScore: Number(formData.communicationSkillScore),
+            aptitudeScore: Number(formData.aptitudeScore),
+            logicalReasoningScore: Number(formData.logicalReasoningScore),
+            mockInterviewScore: Number(formData.mockInterviewScore),
+            backlogs: Number(formData.backlogs) || 0,
+        };
+
         try {
-            const result = await predictPlacement(formData);
-            console.log(result);
+            const result = await predictPlacement(payload);
             setPredictionResult(result);
         } catch (error) {
             console.error("Prediction failed:", error);
+            const msg = error.response?.data?.message || "Failed to communicate with prediction service. Please ensure backend services are running.";
+            setApiError(msg);
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const formatConfidence = (val) => {
+        if (val === undefined || val === null) return "";
+        const num = val > 1 ? val : val * 100;
+        return num.toFixed(2);
     };
 
     return (
@@ -170,10 +205,9 @@ function PredictionForm() {
                                 onChange={handleChange}
                                 error={errors.branch}
                                 options={[
-                                    { value: "CSE", label: "CSE" },
-                                    { value: "IT", label: "IT" },
-                                    { value: "ECE", label: "ECE" },
-                                    { value: "EEE", label: "EEE" },
+                                    { value: "Computer Science", label: "Computer Science" },
+                                    { value: "Information Technology", label: "Information Technology" },
+                                    { value: "Electronics", label: "Electronics" },
                                     { value: "Mechanical", label: "Mechanical" },
                                     { value: "Civil", label: "Civil" },
                                     { value: "Other", label: "Other" },
@@ -293,29 +327,55 @@ function PredictionForm() {
                         </div>
                     </div>
 
+                    {/* API Error Alert */}
+                    {apiError && (
+                        <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-center gap-3 text-red-700">
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <p className="text-sm font-medium">{apiError}</p>
+                        </div>
+                    )}
+
                     {/* Submit Button */}
                     <div className="pt-8">
                         <button
                             type="submit"
-                            className="w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-primary-600 to-accent-500 text-white font-bold text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary-500/30"
+                            disabled={loading}
+                            className="w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-primary-600 to-accent-500 text-white font-bold text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
-                            <Sparkles className="w-6 h-6 animate-pulse" />
-                            Predict Placement
+                            {loading ? (
+                                <>
+                                    <Loader2 className="w-6 h-6 animate-spin" />
+                                    Predicting...
+                                </>
+                            ) : (
+                                <>
+                                    <Sparkles className="w-6 h-6 animate-pulse" />
+                                    Predict Placement
+                                </>
+                            )}
                         </button>
                     </div>
+
+                    {/* Prediction Result Display */}
                     {predictionResult && (
-                        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center">
-                            <h3 className="text-2xl font-bold text-slate-900">
+                        <div className={`mt-8 rounded-2xl border p-6 text-center shadow-md transition-all ${
+                            predictionResult.prediction
+                                ? "border-emerald-200 bg-emerald-50/70"
+                                : "border-rose-200 bg-rose-50/70"
+                        }`}>
+                            <h3 className={`text-2xl font-extrabold ${
+                                predictionResult.prediction ? "text-emerald-800" : "text-rose-800"
+                            }`}>
                                 {predictionResult.prediction
                                     ? "Likely to be Placed 🎉"
-                                    : "Unlikely to be Placed"}
+                                    : "Unlikely to be Placed ⚠️"}
                             </h3>
 
-                            <p className="mt-3 text-lg text-slate-600">
-                                Confidence: {predictionResult.confidence}%
+                            <p className="mt-3 text-lg font-semibold text-slate-700">
+                                Confidence: <span className="font-extrabold">{formatConfidence(predictionResult.confidence)}%</span>
                             </p>
 
-                            <p className="mt-2 text-slate-600">
+                            <p className="mt-2 text-slate-600 font-medium">
                                 {predictionResult.message}
                             </p>
                         </div>
@@ -326,4 +386,4 @@ function PredictionForm() {
     );
 }
 
-export default PredictionForm
+export default PredictionForm;

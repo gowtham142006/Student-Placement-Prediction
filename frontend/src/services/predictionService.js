@@ -1,8 +1,6 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:8080/api";
+import API from "./api";
 
 export const predictPlacement = async (formData) => {
-    const response = await axios.post(`${API_URL}/predict`, formData);
+    const response = await API.post("/predict", formData);
     return response.data;
 };
